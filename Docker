@@ -1,0 +1,49 @@
+#!/bin/bash
+#Author-Eric Sotsky
+#Date- October 26, 2022
+#Installation of Docker using Repository on Centos 7, I think?
+
+
+echo "We will install Jenkins using a repository"
+
+sleep 5
+
+echo "We will now set up the repository"
+
+sudo yum install -y yum-utils
+
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+echo "we will now install the docker engine"
+
+sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+sleep 4
+
+echo "We will now find and install a Docker version for Centos"
+
+yum list docker-ce --showduplicates | sort -r
+
+sleep 10
+
+echo "The list returned depends on which repositories are enabled, and is specific to your version of CentOS (indicated by the .el7 suffix in this example)."
+
+echo "Install a specific version by its fully qualified package name, which is the package name (docker-ce) plus the version string (2nd column) starting at the first colon (:), up to the first hyphen, separated by a hyphen (-). For example, docker-ce-18.09.1"
+
+sudo yum install docker-ce-18.03.1 docker-ce-cli-18.03.1 containerd.io docker-compose-plugin      
+
+sleep 5
+
+echo "start docker"
+
+sudo systemctl start docker
+
+sleep 5
+
+echo "Verify that Docker is installed correctly by running the hello-world image"
+
+sudo docker run hello-world
+
+echo "You have successfully installed Docker"
